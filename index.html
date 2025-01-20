@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musix Player</title>
+    <style>
+        *{
+    font-family: fantasy;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+  background-color: rgb(51, 17, 4);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.music-player{
+    background-color: chocolate;
+    width: 500px;
+    text-align: center;
+    padding: 15px 55px;
+}
+
+nav{
+  margin-bottom: 40px ;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav .circle{
+  background-color: chocolate;
+  width: 5px;
+  height:5px;
+  border-radius: 50%;
+  box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
+}
+
+ img{
+  height: 45px;
+  width: 40px;
+  padding: 0px;
+ }
+
+ .music-img{
+  height: 200px;
+  width: 200px;
+  border: 8px solid black;
+  border-radius: 50%;
+  box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
+ }
+
+ .music-player h1{
+  color: black;
+  font-size: 62px;
+  font-weight: 500;
+  margin-top: 32px;
+ }
+ #progress{
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgb(51, 17, 4);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 40px 0;
+ }
+ #progress::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 30px;
+  height: 30px;
+  background: chocolate;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+ }
+ .controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+ .controls div{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.50);
+  cursor: pointer;
+ }
+
+.circle:active{
+  transform: scale(0.9); }
+
+.play:active {
+  transform: scale(0.9); 
+}
+
+.circle:active {
+  background-color: rgba(255, 255, 255, 0.2); 
+  border-radius: 50%;
+}
+
+.play:active {
+  background-color: rgba(255, 255, 255, 0.2); 
+  border-radius: 50%;
+}
+
+    </style>
+    
+    <script>
+        window.onload = function() {
+            const muzic = document.getElementById("muzic");
+            const progress = document.getElementById("progress");
+            const ctrlIcon = document.getElementById("ctrlIcon");
+
+            muzic.ontimeupdate = function() {
+                progress.value = (muzic.currentTime / muzic.duration) * 100;
+            };
+
+            progress.addEventListener("input", function() {
+                muzic.currentTime = (progress.value / 100) * muzic.duration;
+            });
+
+            function playPause() {
+                if (muzic.paused) {
+                    muzic.play();
+                    ctrlIcon.src = "pause.png";
+                } else {
+                    muzic.pause();
+                    ctrlIcon.src = "play-button.png";
+                }
+            }
+
+            function volumeUp() {
+                muzic.volume = Math.min(1, muzic.volume + 0.1);
+            }
+
+            function volumeDown() {
+                muzic.volume = Math.max(0, muzic.volume - 0.1);
+            }
+
+            window.playPause = playPause;
+            window.volumeUp = volumeUp;
+            window.volumeDown = volumeDown;
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+
+                <div class="circle" onclick="volumeDown()">
+                    <img src="volume-down.png">
+                </div>
+
+                <div class="circle" onclick="volumeUp()">
+                    <img src="high-volume.png">
+                </div>
+
+            </nav>
+            
+            <img src="Music image.jfif" class="music-img">
+             <h1>Mi Amor</h1>
+              <p>Mr. Wealth</p>
+
+            <audio id="muzic">
+                <source src="Mi_Amor by Mr Wealth.mp3">
+            </audio>
+
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+
+            <div class="play" onclick="playPause()">
+                    <img src="play-button.png" id="ctrlIcon" alt="Play/Pause">
+            </div>
+
+            </div>
+        
+        </div>
+
+    </div>
+</body>
+
+
+</html>
